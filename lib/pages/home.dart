@@ -39,39 +39,82 @@ class _HomePageState extends State<HomePage> {
           category(),
           SizedBox(height: 20),
           Container(
-            height: 325,
-            width: 343,
+            padding: EdgeInsets.only(top: 10),
+            height: 325.48,
+            width: 342.51,
             decoration: BoxDecoration(
                 color: Color(0xff6c5de6),
                 borderRadius: BorderRadius.circular(16)),
             child: Column(children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  Row(
+                    children: [
+                      SizedBox(
+                        height: 31.33,
+                        width: 31.33,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                'assets/fire.png',
+                              )),
+                              shape: BoxShape.circle,
+                              color: Color(0xff5a4dc9)),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            "Онцлох",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 20,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   SizedBox(
-                    height: 31.33,
-                    width: 31.33,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: Colors.white),
-                    ),
+                    width: 20,
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        "Онцлох",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 20,
-                            color: Colors.white),
-                      ),
-                    ),
-                  )
+                      width: 103,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              "Бүгд",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Icon(
+                              Icons.navigate_next,
+                              color: Colors.white,
+                            )
+                          ],
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xff5a4dc9),
+                        ),
+                      ))
                 ],
               ),
               Stack(
-                children: [],
+                children: [
+                  Container(
+                    height: 183.86,
+                    width: 307.63,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(18)),
+                  )
+                ],
               ),
             ]),
           ),
