@@ -1,3 +1,6 @@
+import 'dart:ffi';
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -83,33 +86,270 @@ class _HomePageState extends State<HomePage> {
                     width: 20,
                   ),
                   Container(
-                      width: 103,
-                      child: ElevatedButton(
-                        onPressed: () {},
+                    width: 71,
+                    height: 24,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.only(left: 10),
+                        backgroundColor: Color(0xff5a4dc9),
+                      ),
+                      child: SizedBox(
+                        width: 71,
+                        height: 24,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
                               "Бүгд",
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400),
                             ),
                             Icon(
-                              Icons.navigate_next,
+                              Icons.navigate_next_rounded,
                               color: Colors.white,
                             )
                           ],
                         ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xff5a4dc9),
-                        ),
-                      ))
+                      ),
+                    ),
+                  )
                 ],
+              ),
+              SizedBox(
+                height: 20,
               ),
               Stack(
                 children: [
                   Container(
                     height: 183.86,
                     width: 307.63,
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            SizedBox(
+                                width: 132,
+                                height: 100,
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                      'assets/ontsloh.png',
+                                    )),
+                                  ),
+                                )),
+                            Container(
+                                padding: EdgeInsets.only(top: 20),
+                                child: SizedBox(
+                                  height: 100,
+                                  width: 131,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height: 51,
+                                        child: RichText(
+                                          text: TextSpan(children: [
+                                            TextSpan(
+                                              text:
+                                                  'Монголын борхон айраг Бор айраг ',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            TextSpan(
+                                              text: '38% Off\n',
+                                              style: TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            )
+                                          ]),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 15,
+                                      ),
+                                      SizedBox(
+                                        height: 18,
+                                        child: RichText(
+                                          text: TextSpan(children: [
+                                            TextSpan(
+                                              text: '9,900₮ ',
+                                              style: TextStyle(
+                                                color: Color(0xff5a4dc9),
+                                                fontSize: 12,
+                                                decoration:
+                                                    TextDecoration.lineThrough,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: '4,450₮',
+                                              style: TextStyle(
+                                                color: Color(0xff5a4dc9),
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            )
+                                          ]),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Container(
+                          child: Row(
+                            children: [
+                              
+                              Expanded(
+                                child: SizedBox(
+                                  child: Flex(
+                                    direction: Axis.horizontal,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: List.generate(
+                                        30,
+                                        (index) => SizedBox(
+                                            width: 6,
+                                            height: 1,
+                                            child: DecoratedBox(
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey,
+                                              ),
+                                            ))),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(top: 5, left: 4),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                child: Row(
+                                  children: [
+                                    IntrinsicHeight(
+                                        child: Container(
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            width: 20.17,
+                                            height: 20.17,
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                    'assets/honog.png'),
+                                              ),
+                                            ),
+                                          ),
+                                          Text(
+                                            " 2 хоног ",
+                                            style: TextStyle(
+                                                color: Color(0xff5a4dc9)),
+                                          ),
+                                        ],
+                                      ),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color:
+                                                  Colors.grey.withOpacity(0.5)),
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                    )),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    IntrinsicHeight(
+                                        child: Container(
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            width: 16.17,
+                                            height: 16.17,
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                    'assets/ticket.png'),
+                                              ),
+                                            ),
+                                          ),
+                                          Text(
+                                            " 10ш үлдсэн ",
+                                            style: TextStyle(
+                                                color: Color(0xff5a4dc9)),
+                                          ),
+                                        ],
+                                      ),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color:
+                                                  Colors.grey.withOpacity(0.5)),
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                    )),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: SizedBox(
+                                  height: 40,
+                                  width: 74,
+                                  child: ElevatedButton(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      padding: EdgeInsets.only(left: 10),
+                                      backgroundColor: Color(0xfff1effc),
+                                    ),
+                                    child: SizedBox(
+                                      height: 40,
+                                      width: 74,
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text("10",
+                                              style: TextStyle(
+                                                  color: Color(0xff5a4dc9))),
+                                          SizedBox(width: 8),
+                                          Container(
+                                            width: 24,
+                                            height: 24,
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                    'assets/symbol.png'),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(18)),
