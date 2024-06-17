@@ -1,10 +1,14 @@
-import 'dart:ffi';
+import 'dart:async';
+import 'dart:convert';
 import 'dart:ui';
-
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:upoint/models/category_model.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:upoint/models/special_model.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -14,18 +18,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<CategoryModel> categories = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _getCategories();
+  Future<List<CategoryModel>> readJson() async {
+    final String response =
+        await rootBundle.loadString('assets/json/category.json');
+    final List<dynamic> data = json.decode(response);
+    return data.map((json) => CategoryModel.fromJson(json)).toList();
   }
 
-  void _getCategories() {
-    setState(() {
-      categories = CategoryModel.getCategories();
-    });
+  Future<List<SpecialModel>> special() async {
+    final String res = await rootBundle.loadString('assets/json/special.json');
+    final List<dynamic> data = json.decode(res);
+    return data.map((json) => SpecialModel.fromJson(json)).toList();
   }
 
   @override
@@ -42,8 +45,8 @@ class _HomePageState extends State<HomePage> {
           category(),
           SizedBox(height: 20),
           Container(
-            padding: EdgeInsets.only(top: 10),
-            height: 325.48,
+            padding: EdgeInsets.only(top: 20),
+            height: 300.48,
             width: 342.51,
             decoration: BoxDecoration(
                 color: Color(0xff6c5de6),
@@ -61,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                           decoration: BoxDecoration(
                               image: DecorationImage(
                                   image: AssetImage(
-                                'assets/fire.png',
+                                'assets/zurag/fire.png',
                               )),
                               shape: BoxShape.circle,
                               color: Color(0xff5a4dc9)),
@@ -122,120 +125,244 @@ class _HomePageState extends State<HomePage> {
               ),
               Stack(
                 children: [
-                  Container(
-                    height: 183.86,
-                    width: 307.63,
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  Swiper(
+                    itemBuilder: (BuildContext context, int index) {
+                      return coupon();
+                    },
+                    autoplay: false,
+                    itemCount: 3,
+                    itemWidth: 330.0,
+                    itemHeight: 183.0,
+                    scrollDirection: Axis.horizontal,
+                    pagination: SwiperPagination(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(top: 195),
+                    ),
+                    layout: SwiperLayout.TINDER,
+                  ),
+                ],
+              ),
+            ]),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 20, right: 10, top: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                    child: Row(
+                  children: [
+                    Container(
+                      width: 17.90,
+                      height: 17.9,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/zurag/star.png'),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      "Супер",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                )),
+                SizedBox(
+                  width: 71,
+                  height: 24,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        "Бүгд",
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold),
+                      ),
+                      Icon(
+                        Icons.navigate_next_rounded,
+                        color: Colors.black,
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  FutureBuilder<List<SpecialModel>> coupon() {
+    return FutureBuilder<List<SpecialModel>>(
+        future: special(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: Text('${snapshot.data}'));
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(child: Text('No data found'));
+          } else {
+            List<SpecialModel> special = snapshot.data!;
+            return Stack(
+              children: [
+                Container(
+                  height: 200.86,
+                  width: 350.63,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 12,
+                          ),
+                          SizedBox(
+                              width: 145,
+                              height: 113,
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                    'assets/zurag/ontsloh.png'
+                                    // special[index].imgPth
+                                    ,
+                                  )),
+                                ),
+                              )),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Container(
+                              padding: EdgeInsets.only(top: 20),
+                              child: SizedBox(
+                                height: 100,
+                                width: 131,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: 51,
+                                      child: RichText(
+                                        text: TextSpan(children: [
+                                          TextSpan(
+                                            text:
+                                                'Монголын борхон айраг Бор айраг '
+                                                // special[index].description
+                                                ,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          TextSpan(
+                                            text: 
+                                            '38% Off\n'
+                                            // special[index].sale +'Off\n'
+                                            ,
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          )
+                                        ]),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    SizedBox(
+                                      height: 18,
+                                      child: RichText(
+                                        text: TextSpan(children: [
+                                          TextSpan(
+                                            text: 
+                                            '9,900₮ '
+                                            // special[index].price
+                                            ,
+                                            style: TextStyle(
+                                              color: Color(0xff5a4dc9),
+                                              fontSize: 12,
+                                              decoration:
+                                                  TextDecoration.lineThrough,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: 
+                                            '4,450₮'
+                                        // '${special[index].price*special[index].sale/100.floor()}₮'
+                                            ,
+                                            style: TextStyle(
+                                              color: Color(0xff5a4dc9),
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          )
+                                        ]),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Container(
+                        child: Row(
                           children: [
                             SizedBox(
-                                width: 132,
-                                height: 100,
-                                child: DecoratedBox(
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                      'assets/ontsloh.png',
-                                    )),
-                                  ),
-                                )),
-                            Container(
-                                padding: EdgeInsets.only(top: 20),
-                                child: SizedBox(
-                                  height: 100,
-                                  width: 131,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        height: 51,
-                                        child: RichText(
-                                          text: TextSpan(children: [
-                                            TextSpan(
-                                              text:
-                                                  'Монголын борхон айраг Бор айраг ',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            TextSpan(
-                                              text: '38% Off\n',
-                                              style: TextStyle(
-                                                color: Colors.red,
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            )
-                                          ]),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 15,
-                                      ),
-                                      SizedBox(
-                                        height: 18,
-                                        child: RichText(
-                                          text: TextSpan(children: [
-                                            TextSpan(
-                                              text: '9,900₮ ',
-                                              style: TextStyle(
-                                                color: Color(0xff5a4dc9),
-                                                fontSize: 12,
-                                                decoration:
-                                                    TextDecoration.lineThrough,
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: '4,450₮',
-                                              style: TextStyle(
-                                                color: Color(0xff5a4dc9),
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            )
-                                          ]),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Container(
-                          child: Row(
-                            children: [
-                              
-                              Expanded(
-                                child: SizedBox(
-                                  child: Flex(
-                                    direction: Axis.horizontal,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: List.generate(
-                                        30,
-                                        (index) => SizedBox(
-                                            width: 6,
-                                            height: 1,
-                                            child: DecoratedBox(
-                                              decoration: BoxDecoration(
-                                                color: Colors.grey,
-                                              ),
-                                            ))),
+                              width: 7.175,
+                              height: 14.35,
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color: Color(0xff6c5de6),
+                                  borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(100),
+                                    bottomRight: Radius.circular(100),
                                   ),
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                            Expanded(
+                              child: SizedBox(
+                                child: Flex(
+                                  direction: Axis.horizontal,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: List.generate(
+                                      20,
+                                      (index) => SizedBox(
+                                          width: 6,
+                                          height: 1,
+                                          child: DecoratedBox(
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey,
+                                            ),
+                                          ))),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 7.175,
+                              height: 14.35,
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color: Color(0xff6c5de6),
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(100),
+                                    bottomLeft: Radius.circular(100),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
                         ),
-                        Container(
-                          padding: EdgeInsets.only(top: 5, left: 4),
+                      ),
+                      Expanded(
+                        child: Container(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
@@ -252,12 +379,14 @@ class _HomePageState extends State<HomePage> {
                                             decoration: BoxDecoration(
                                               image: DecorationImage(
                                                 image: AssetImage(
-                                                    'assets/honog.png'),
+                                                    'assets/zurag/honog.png'),
                                               ),
                                             ),
                                           ),
                                           Text(
-                                            " 2 хоног ",
+                                            " 2 хоног "
+                                            // '${special[index].day} хоног'
+                                            ,
                                             style: TextStyle(
                                                 color: Color(0xff5a4dc9)),
                                           ),
@@ -283,12 +412,16 @@ class _HomePageState extends State<HomePage> {
                                             decoration: BoxDecoration(
                                               image: DecorationImage(
                                                 image: AssetImage(
-                                                    'assets/ticket.png'),
+                                                    'assets/zurag/ticket.png'
+                                                    // special[index].imgPth
+                                                    ),
                                               ),
                                             ),
                                           ),
                                           Text(
-                                            " 10ш үлдсэн ",
+                                            " 10ш үлдсэн "
+                                            // ' ${special[index].quantity}ш үлдсэн '
+                                            ,
                                             style: TextStyle(
                                                 color: Color(0xff5a4dc9)),
                                           ),
@@ -307,7 +440,7 @@ class _HomePageState extends State<HomePage> {
                               Container(
                                 child: SizedBox(
                                   height: 40,
-                                  width: 74,
+                                  width: 64,
                                   child: ElevatedButton(
                                     onPressed: () {},
                                     style: ElevatedButton.styleFrom(
@@ -319,23 +452,26 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     child: SizedBox(
                                       height: 40,
-                                      width: 74,
+                                      width: 64,
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text("10",
+                                          Text(
+                                            "10"
+                                            // '${special[index].upoint}'
+                                            ,
                                               style: TextStyle(
                                                   color: Color(0xff5a4dc9))),
-                                          SizedBox(width: 8),
+                                          SizedBox(width: 4),
                                           Container(
                                             width: 24,
                                             height: 24,
                                             decoration: BoxDecoration(
                                               image: DecorationImage(
                                                 image: AssetImage(
-                                                    'assets/symbol.png'),
+                                                    'assets/zurag/symbol.png'),
                                               ),
                                             ),
                                           ),
@@ -348,85 +484,100 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(18)),
-                  )
-                ],
-              ),
-            ]),
-          ),
-        ],
-      ),
-    );
+                      ),
+                      SizedBox(
+                        height: 6,
+                      )
+                    ],
+                  ),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(18)),
+                )
+              ],
+            );
+          }
+        });
   }
 
-  Container category() {
-    return Container(
-      height: 103.15,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        itemCount: categories.length,
-        separatorBuilder: (context, index) => SizedBox(width: 14),
-        itemBuilder: (context, index) {
+  FutureBuilder<List<CategoryModel>> category() {
+    return FutureBuilder<List<CategoryModel>>(
+      future: readJson(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: Text('${snapshot.data}'));
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return Center(child: Text('No data found'));
+        } else {
+          List<CategoryModel> cate = snapshot.data!;
           return Container(
-            width: 87.13,
-            decoration: BoxDecoration(
-              color: Color(0xfff2f4f9),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Stack(
-              children: [
-                Positioned(
-                  height: 61.9,
+            height: 103.15,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              itemCount: cate.length,
+              separatorBuilder: (context, index) => SizedBox(width: 14),
+              itemBuilder: (context, index) {
+                return Container(
                   width: 87.13,
-                  bottom: 0,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0xfff2f4f9),
-                          blurRadius: 4,
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Center(
-                      child: Text(
-                        categories[index].name,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
+                  decoration: BoxDecoration(
+                    color: Color(0xfff2f4f9),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        height: 61.9,
+                        width: 87.13,
+                        bottom: 0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color(0xfff2f4f9),
+                                blurRadius: 4,
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Center(
+                            child: Text(
+                              cate[index].name,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 5,
-                  child: ClipOval(
-                    child: Container(
-                      width: 80.1,
-                      height: 80.1,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(categories[index].iconPth),
-                          fit: BoxFit.cover,
+                      Positioned(
+                        left: 5,
+                        child: ClipOval(
+                          child: Container(
+                            width: 80.1,
+                            height: 80.1,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(cate[index].iconPth),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                ),
-              ],
+                );
+              },
             ),
           );
-        },
-      ),
+        }
+      },
     );
   }
 
@@ -444,7 +595,7 @@ class _HomePageState extends State<HomePage> {
           prefixIcon: Padding(
             padding: const EdgeInsets.all(12),
             child: Image.asset(
-              'assets/search.jpg',
+              'assets/zurag/search.jpg',
               width: 20,
               height: 20,
             ),
@@ -457,7 +608,7 @@ class _HomePageState extends State<HomePage> {
                 Padding(
                   padding: const EdgeInsets.all(8),
                   child: Image.asset(
-                    'assets/shat.jpg',
+                    'assets/zurag/shat.jpg',
                     width: 20,
                     height: 20,
                   ),

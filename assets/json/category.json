@@ -1,0 +1,23 @@
+[
+    {
+      "id": 1,
+      "name": "Хоол, ундаа",
+      "iconPth": "assets/zurag/Hool.png"
+    },
+    {
+        "id": 2,
+        "name": "Хүнс",
+        "iconPth": "assets/zurag/Huns.png"
+      },
+      {
+        "id": 3,
+        "name": "Үзвэр, үйлчилгээ",
+        "iconPth": "assets/zurag/Uzver.png"
+      },
+      {
+        "id": 4,
+        "name": "Ахуй",
+        "iconPth": "assets/zurag/Hool.png"
+      }
+    
+  ]
