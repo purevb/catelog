@@ -68,6 +68,9 @@ flutter:
   assets:
     - assets/zurag/
     - assets/json/
+    - assets/zurag/suggested/
+    - assets/zurag/others/
+    
 
             # - images/a_dot_ham.jpeg
 

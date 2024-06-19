@@ -7,7 +7,9 @@
         "day": 2,
         "quantity": 10,
         "upoint": 10,
-        "imgPth": "assets/zurag/ontsloh.png"
+        "imgPth": "assets/zurag/others/iphone.png",
+        "ownerImgPath": "assets/zurag/bene.png"
+
     },
     {
         "id": 2,
@@ -17,7 +19,9 @@
         "day": 2,
         "quantity": 10,
         "upoint": 101,
-        "imgPth": "assets/zurag/figma.png"
+        "imgPth": "assets/zurag/others/od.png",
+        "ownerImgPath": "assets/zurag/bene.png"
+
     },
     {
         "id": 3,
@@ -27,6 +31,7 @@
         "day": 2,
         "quantity": 10,
         "upoint": 102,
-        "imgPth": "assets/zurag/ontsloh.png"
+        "imgPth": "assets/zurag/others/iphone.png",
+        "ownerImgPath": "assets/zurag/bene.png"
     }
 ]

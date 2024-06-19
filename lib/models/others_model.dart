@@ -1,4 +1,4 @@
-class SpecialModel {
+class OtherModel {
   int id;
   String description;
   int sale;
@@ -7,8 +7,9 @@ class SpecialModel {
   int quantity;
   int upoint;
   String imgPth;
+  String ownerImgPath;
 
-  SpecialModel({
+  OtherModel({
     required this.id,
     required this.description,
     required this.sale,
@@ -17,10 +18,11 @@ class SpecialModel {
     required this.quantity,
     required this.upoint,
     required this.imgPth,
+    required this.ownerImgPath
   });
 
-  factory SpecialModel.fromJson(Map<String, dynamic> json) {
-    return SpecialModel(
+  factory OtherModel.fromJson(Map<String, dynamic> json) {
+    return OtherModel(
       id: json['id'],
       description: json['description'],
       sale: json['sale'],
@@ -29,6 +31,8 @@ class SpecialModel {
       quantity: json['quantity'],
       upoint: json['upoint'],
       imgPth: json['imgPth'],
+      ownerImgPath: json['ownerImgPath'],
+
     );
   }
 }

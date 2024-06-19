@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "description": "Монголын борхон айраг Бор айраг",
+        "sale": 38,
+        "price": 9900,
+        "day": 2,
+        "upoint": 10,
+        "imgPth": "assets/zurag/suggested/laptop.png",
+        "ownerImgPath": "assets/zurag/bene.png"
+    },
+    {
+        "id": 2,
+        "description": "Монголын борхон айраг Бор айраг",
+        "sale": 38,
+        "price": 9500,
+        "day": 2,
+        "upoint": 101,
+        "imgPth": "assets/zurag/suggested/computer.png",
+        "ownerImgPath": "assets/zurag/bene.png"
+    },
+    {
+        "id": 3,
+        "description": "Монголын борхон айраг Бор айраг",
+        "sale": 38,
+        "price": 18000,
+        "day": 2,
+        "upoint": 102,
+        "imgPth": "assets/zurag/suggested/laptop.png",
+        "ownerImgPath": "assets/zurag/bene.png"
+    },
+    {
+        "id": 4,
+        "description": "Монголын борхон айраг Бор айраг",
+        "sale": 38,
+        "price": 18000,
+        "day": 2,
+        "upoint": 102,
+        "imgPth": "assets/zurag/suggested/computer.png",
+        "ownerImgPath": "assets/zurag/bene.png"
+    }
+]

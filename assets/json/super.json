@@ -5,9 +5,9 @@
         "sale": 38,
         "price": 9900,
         "day": 2,
-        "quantity": 10,
         "upoint": 10,
-        "imgPth": "assets/zurag/ontsloh.png"
+        "imgPth": "assets/zurag/buuz.png",
+        "ownerImgPath":"assets/zurag/bene.png"
     },
     {
         "id": 2,
@@ -15,9 +15,10 @@
         "sale": 38,
         "price": 9500,
         "day": 2,
-        "quantity": 10,
         "upoint": 101,
-        "imgPth": "assets/zurag/figma.png"
+        "imgPth": "assets/zurag/utas.png",
+        "ownerImgPath":"assets/zurag/bene.png"
+
     },
     {
         "id": 3,
@@ -25,8 +26,18 @@
         "sale": 38,
         "price": 18000,
         "day": 2,
-        "quantity": 10,
         "upoint": 102,
-        "imgPth": "assets/zurag/ontsloh.png"
+        "imgPth": "assets/zurag/buuz.png",
+        "ownerImgPath":"assets/zurag/bene.png"
+    },
+    {
+        "id": 4,
+        "description": "Монголын борхон айраг Бор айраг",
+        "sale": 38,
+        "price": 18000,
+        "day": 2,
+        "upoint": 102,
+        "imgPth": "assets/zurag/utas.png",
+        "ownerImgPath":"assets/zurag/bene.png"
     }
 ]
